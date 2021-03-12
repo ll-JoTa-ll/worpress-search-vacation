@@ -1,0 +1,179 @@
+<div class="row m-0 p-0 p-4" style="">
+  <div
+    class="col-12 m-0 p-0 p-4"
+    style="
+      border-radius: 20px 0 20px 0 !important;
+      border: 1px solid !important;
+      border-image-source: linear-gradient(
+        91.13deg,
+        #e82d56 8.77%,
+        #10afb5 98.8%
+      );
+    "
+  >
+    <div class="row m-0 p-0">
+      <div class="col-12 m-0 p-0">
+        <div class="row m-0 p-0">
+          <div class="col-3 m-0 p-0 center-div-item-menu">
+            <div class="row m-0 p-0">
+              <div
+                class="col-4 m-0 p-0"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Paquetes_seleccionado.svg"
+                  alt=""
+                  *ngIf="paqueteSel"
+                  [routerLink]="['/paquetes']"
+                  id="menu_paqueteSel"
+                />
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Paquetes_deseleccionado.svg"
+                  alt=""
+                  *ngIf="paqueteDes"
+                  [routerLink]="['/paquetes']"
+                  id="menu_paqueteDes"
+                />
+              </div>
+              <div
+                class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: #000000 !important;
+                "
+              >
+                Paquetes
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3 m-0 p-0 center-div-item-menu">
+            <div class="row m-0 p-0">
+              <div class="col-4 m-0 p-0">
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Vuelo-hotel_seleccionado.svg"
+                  alt=""
+                  *ngIf="vueloHotelSel"
+                  [routerLink]="['/vuelo-hotel']"
+                  id="menu_vueloHotelSel"
+                />
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Vuelo-hotel_deseleccionado.svg"
+                  alt=""
+                  *ngIf="vueloHotelDes"
+                  [routerLink]="['/vuelo-hotel']"
+                  id="menu_vueloHotelDes"
+                />
+              </div>
+              <div
+                class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: #000000 !important;
+                "
+              >
+                Vuelo+Hotel
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3 m-0 p-0 center-div-item-menu">
+            <div class="row m-0 p-0">
+              <div class="col-4 m-0 p-0">
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Vuelo_seleccionado.svg"
+                  alt=""
+                  *ngIf="vueloSel"
+                  [routerLink]="['/vuelo']"
+                  id="menu_vueloSel"
+                />
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/Vuelo_deseleccionado.svg"
+                  alt=""
+                  *ngIf="vueloDes"
+                  [routerLink]="['/vuelo']"
+                  id="menu_vueloDes"
+                />
+              </div>
+              <div
+                class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: #000000 !important;
+                "
+              >
+                Vuelo
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3 m-0 p-0 center-div-item-menu">
+            <div class="row m-0 p-0">
+              <div class="col-4 m-0 p-0">
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/hotel_seleccionado.svg"
+                  alt=""
+                  *ngIf="hotelSel"
+                  [routerLink]="['/hotel']"
+                  id="menu_hotelSel"
+                />
+                <img
+                  class="pr-3"
+                  src="./assets/images/iconos/hotel_deseleccionado.svg"
+                  alt=""
+                  *ngIf="hotelDes"
+                  [routerLink]="['/hotel']"
+                  id="menu_hotelDes"
+                />
+              </div>
+              <div
+                class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: #000000 !important;
+                "
+              >
+                Hotel
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 m-0 p-0 pt-2">
+        <div class="row m-0 p-0">
+          <div
+            class="col-12"
+            style="opacity: 0.2; border: 1px solid #000000"
+          ></div>
+        </div>
+      </div>
+
+      <div
+        class="col-12 m-0 p-0 pt-4"
+        style="width: 100% !important; background-color: white !important"
+      >
+        <ng-content style="width: 100% !important"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

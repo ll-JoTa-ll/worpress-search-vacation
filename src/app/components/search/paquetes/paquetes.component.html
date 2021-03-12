@@ -1,0 +1,81 @@
+<app-header>
+  <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-4 m-0 p-0">A donde iremos?</div>
+
+        <div class="col-4 m-0 p-0">Cuando viajaremos?</div>
+
+        <div class="col-4 m-0 p-0"></div>
+      </div>
+    </div>
+    <div class="col-12 m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-4 m-0 p-0">
+          <!--
+          <label class="label-input">
+            <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
+            <input
+              class="input-sin-borde"
+              type="text"
+              placeholder="Elijamos un destino"
+              id="txtOrigen"
+            />
+          </label>
+
+        -->
+
+          <mat-label></mat-label>
+          <input
+            type="text"
+            placeholder="Elijamos un destino"
+            aria-label="Number"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="onOptionSelected($event)"
+            [displayWith]="display"
+          >
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+            >
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+
+        <div class="col-4 m-0 p-0">
+          <label class="label-input">
+            <img
+              class="pl-3"
+              src="./assets/images/iconos/vuelos/calendario.svg"
+              alt=""
+            />
+            <input
+              class="input-sin-borde"
+              type="text"
+              placeholder="Salida"
+              style="width: 30% !important"
+              placeholder="Elijamos juntos"
+            />
+          </label>
+        </div>
+
+        <div class="col-4 m-0 p-0">
+          <button class="btn-buscar font-Nunito-Regular size-text-2">
+            <img
+              class="pr-3"
+              src="./assets/images/iconos/vuelos/lupa.svg"
+              alt=""
+            />
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-header>
