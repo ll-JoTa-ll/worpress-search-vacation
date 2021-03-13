@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 import { SearchComponent } from './components/search/search.component';
 import { VueloComponent } from './components/search/vuelo/vuelo.component';
@@ -37,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxWebstorageModule.forRoot(),
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule,
