@@ -20,6 +20,8 @@ export const environment = {
   // urlVisaSource: 'https://static-content.vnforapps.com/v2/js/checkout.js'
   urlFlight: 'https://domiruth-uat.azure-api.net/flight/',
   urlCustom: 'https://domiruth-uat.azure-api.net/customer/',
+
+  urlVacaFacade: 'http://localhost:4200/#/facade/',
 };
 
 /*

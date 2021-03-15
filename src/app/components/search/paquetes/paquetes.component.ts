@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SessionStorageService, LocalStorageService } from 'ngx-webstorage';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 interface ResultSearch {
   id: string;
@@ -196,7 +197,7 @@ export class PaquetesComponent implements OnInit {
       localStorage.setItem('nombreXXX', 'JoTa');
 
       window.open(
-        'http://localhost:4200/#/facade/' + JSON.stringify(filter),
+        environment.urlVacaFacade + JSON.stringify(filter),
         '_blank'
       );
 

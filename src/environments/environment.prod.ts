@@ -13,4 +13,5 @@ export const environment = {
   urlFlight: 'https://domiruth-uat.azure-api.net/flight/',
   urlCustom: 'https://domiruth-uat.azure-api.net/customer/',
   urlSecurity: 'https://domiruth-uat.azure-api.net/security/',
+  urlVacaFacade: 'http://vacationuatsa.z13.web.core.windows.net/#/facade/',
 };
