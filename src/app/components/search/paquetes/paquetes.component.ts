@@ -190,16 +190,7 @@ export class PaquetesComponent implements OnInit {
       console.log('filter');
       console.log(filter);
 
-      this.sessionStorageService.store('wpc_package_s', filter);
-      this.localStorageService.store('wpc_package_l_v1', filter);
-
-      localStorage.setItem('ls_package', JSON.stringify(filter));
-      localStorage.setItem('nombreXXX', 'JoTa');
-
-      window.open(
-        environment.urlVacaFacade + JSON.stringify(filter),
-        '_blank'
-      );
+      window.open(environment.urlVacaFacade + JSON.stringify(filter), '_blank');
 
       //this.router.navigate(['result']);
     } else {
