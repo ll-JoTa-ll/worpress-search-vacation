@@ -190,7 +190,10 @@ export class PaquetesComponent implements OnInit {
       console.log('filter');
       console.log(filter);
 
-      window.open(environment.urlVacaFacade + JSON.stringify(filter), '_blank');
+      window.open(
+        environment.urlVacaFacade + '1/' + JSON.stringify(filter),
+        '_blank'
+      );
 
       //this.router.navigate(['result']);
     } else {
