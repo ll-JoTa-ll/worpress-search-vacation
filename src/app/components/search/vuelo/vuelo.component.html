@@ -1,14 +1,14 @@
 <app-header>
   <div class="row m-0 p-0 pl-4 pr-4 pt-3">
     <div class="col-12 m-0 p-0">
-      <mat-radio-group aria-label="Select an option">
-        <mat-radio-button class="font-Nunito-Regular size-text-1" value="1">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="tipoVuelo">
+        <mat-radio-button class="font-Nunito-Regular size-text-1" value="RT">
           Ida y Vuelta
         </mat-radio-button>
-        <mat-radio-button class="font-Nunito-Regular size-text-1" value="2">
+        <mat-radio-button class="font-Nunito-Regular size-text-1" value="OW">
           Solo ida
         </mat-radio-button>
-        <mat-radio-button class="font-Nunito-Regular size-text-1" value="3">
+        <mat-radio-button class="font-Nunito-Regular size-text-1" value="MC">
           Multidestinos
         </mat-radio-button>
       </mat-radio-group>
@@ -19,42 +19,140 @@
         <div class="col-4 m-0 p-0">
           <label class="label-input">
             <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
+            <!--
             <input
               class="input-sin-borde"
               type="text"
               placeholder="Origen"
               id="txtOrigen"
             />
+            -->
+            <input
+              type="text"
+              placeholder="Origen"
+              aria-label="Number"
+              matInput
+              class="input-sin-borde"
+              [formControl]="myControlOrigen"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="onOptionSelectedOrigen($event)"
+              [displayWith]="display"
+            >
+              <mat-option
+                *ngFor="let option of filteredOptionsOrigen | async"
+                [value]="option"
+              >
+                <mat-icon
+                  *ngIf="
+                    option.icon && option.icon !== '' && option.icon === 'A';
+                    else elseTem
+                  "
+                >
+                  local_airport
+                </mat-icon>
+
+                <ng-template #elseTem>
+                  <mat-icon
+                    *ngIf="
+                      option.icon && option.icon !== '' && option.icon === 'C';
+                      else elseTem
+                    "
+                    >location_city</mat-icon
+                  >
+                </ng-template>
+
+                {{ option.name | titlecase }}
+              </mat-option>
+            </mat-autocomplete>
           </label>
         </div>
 
         <div class="col-4 m-0 p-0">
           <label class="label-input">
             <img src="./assets/images/iconos/vuelos/destino.svg" alt="" />
+            <!--
             <input
               class="input-sin-borde"
               type="text"
               placeholder="Destino"
               id="txtDestino"
             />
+            -->
+            <input
+              type="text"
+              placeholder="Destino"
+              aria-label="Number"
+              matInput
+              class="input-sin-borde"
+              [formControl]="myControlDestino"
+              [matAutocomplete]="autoDestino"
+            />
+            <mat-autocomplete
+              #autoDestino="matAutocomplete"
+              (optionSelected)="onOptionSelectedDestino($event)"
+              [displayWith]="display"
+            >
+              <mat-option
+                *ngFor="let option of filteredOptionsDestino | async"
+                [value]="option"
+              >
+                <mat-icon
+                  *ngIf="
+                    option.icon && option.icon !== '' && option.icon === 'A';
+                    else elseTem
+                  "
+                >
+                  local_airport
+                </mat-icon>
+
+                <ng-template #elseTem>
+                  <mat-icon
+                    *ngIf="
+                      option.icon && option.icon !== '' && option.icon === 'C';
+                      else elseTem
+                    "
+                    >location_city</mat-icon
+                  >
+                </ng-template>
+
+                {{ option.name | titlecase }}
+              </mat-option>
+            </mat-autocomplete>
           </label>
         </div>
 
         <div class="col-4 m-0 p-0">
           <label class="label-input">
+            <!--
             <img
               class="pl-3"
               src="./assets/images/iconos/vuelos/calendario.svg"
               alt=""
             />
+            -->
+
             <input
-              class="input-sin-borde"
-              type="text"
               placeholder="Salida"
-              style="width: 45% !important"
+              class="input-sin-borde"
+              matInput
+              [matDatepicker]="dpBeginDeparture"
+              [min]="minCalendar"
+              autocomplete="off"
+              readonly="true"
+              (dateChange)="onBeginDateChange1($event)"
+              [(ngModel)]="matDateOrigen"
             />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dpBeginDeparture"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpBeginDeparture disabled="false"></mat-datepicker>
 
             <span
+              *ngIf="tipoVuelo == 'RT'"
               style="
                 width: 10% !important;
                 text-align: center !important;
@@ -65,11 +163,21 @@
             </span>
 
             <input
-              class="input-sin-borde"
-              type="text"
               placeholder="Regreso"
-              style="width: 45% !important"
+              class="input-sin-borde"
+              matInput
+              [matDatepicker]="dpEndDeparture"
+              [min]="minEndDate"
+              autocomplete="off"
+              readonly="true"
+              (dateChange)="onBeginDateChange2($event)"
+              [(ngModel)]="matDateDestino"
             />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dpEndDeparture"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpEndDeparture disabled="false"></mat-datepicker>
           </label>
         </div>
       </div>
@@ -120,13 +228,19 @@
         </div>
 
         <div class="col-4 m-0 p-0" style="display: flex; align-items: center">
-          <mat-checkbox class="example-margin font-Nunito-Regular size-text-1">
+          <mat-checkbox
+            class="example-margin font-Nunito-Regular size-text-1"
+            [(ngModel)]="inMaleta"
+          >
             Incluye maleta en bodega
           </mat-checkbox>
         </div>
 
         <div class="col-4 m-0 p-0">
-          <button class="btn-buscar font-Nunito-Regular size-text-2">
+          <button
+            (click)="search()"
+            class="btn-buscar font-Nunito-Regular size-text-2"
+          >
             <img
               class="pr-3"
               src="./assets/images/iconos/vuelos/lupa.svg"
@@ -142,4 +256,12 @@
 
     <div class="col-12 m-0 p-0"></div>
   </div>
+
+  <ngx-spinner
+    bdColor="rgba(51, 51, 51, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-spin-fade-rotating"
+    style="width: 100% !important; height: 100% !important"
+  ></ngx-spinner>
 </app-header>

@@ -133,7 +133,7 @@ export class PaquetesComponent implements OnInit {
     return this.destinies.filter(
       //(option) => option.name.toLowerCase().indexOf(filterValue) === 0
       function (option) {
-        return option.name.toLowerCase().indexOf(filterValue) === 0;
+        return option.name.toLowerCase().indexOf(filterValue) >= 0;
       }
     );
   }
