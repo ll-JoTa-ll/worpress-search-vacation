@@ -1,5 +1,8 @@
 <app-header>
-  <div class="row m-0 p-0 pl-4 pr-4 pt-3">
+  <div
+    class="row m-0 p-0 pl-4 pr-4 pt-3"
+    style="padding-bottom: 100px !important"
+  >
     <div class="col-12 m-0 p-0">
       <mat-radio-group aria-label="Select an option" [(ngModel)]="tipoVuelo">
         <mat-radio-button class="font-Nunito-Regular size-text-1" value="RT">
@@ -8,9 +11,11 @@
         <mat-radio-button class="font-Nunito-Regular size-text-1" value="OW">
           Solo ida
         </mat-radio-button>
+        <!--
         <mat-radio-button class="font-Nunito-Regular size-text-1" value="MC">
           Multidestinos
         </mat-radio-button>
+        -->
       </mat-radio-group>
     </div>
 
@@ -125,60 +130,87 @@
         </div>
 
         <div class="col-4 m-0 p-0">
-          <label class="label-input">
-            <!--
-            <img
-              class="pl-3"
-              src="./assets/images/iconos/vuelos/calendario.svg"
-              alt=""
-            />
-            -->
+          <!--<label class="label-input"> </label>-->
 
-            <input
-              placeholder="Salida"
-              class="input-sin-borde"
-              matInput
-              [matDatepicker]="dpBeginDeparture"
-              [min]="minCalendar"
-              autocomplete="off"
-              readonly="true"
-              (dateChange)="onBeginDateChange1($event)"
-              [(ngModel)]="matDateOrigen"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="dpBeginDeparture"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #dpBeginDeparture disabled="false"></mat-datepicker>
-
-            <span
-              *ngIf="tipoVuelo == 'RT'"
+          <div
+            class="row m-0 p-0"
+            style="
+              border-radius: 5px;
+              border: 1px solid #a9a9a9;
+              height: 50px !important;
+            "
+          >
+            <div
+              class="m-0 p-0"
               style="
-                width: 10% !important;
-                text-align: center !important;
-                color: #a9a9a9;
+                width: 45% !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
               "
             >
-              |
-            </span>
+              <input
+                placeholder="Salida"
+                class="input-sin-borde"
+                matInput
+                [matDatepicker]="dpBeginDeparture"
+                [min]="minCalendar"
+                autocomplete="off"
+                readonly="true"
+                (dateChange)="onBeginDateChange1($event)"
+                [(ngModel)]="matDateOrigen"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpBeginDeparture"
+              ></mat-datepicker-toggle>
+              <mat-datepicker
+                #dpBeginDeparture
+                disabled="false"
+              ></mat-datepicker>
+            </div>
 
-            <input
-              placeholder="Regreso"
-              class="input-sin-borde"
-              matInput
-              [matDatepicker]="dpEndDeparture"
-              [min]="minEndDate"
-              autocomplete="off"
-              readonly="true"
-              (dateChange)="onBeginDateChange2($event)"
-              [(ngModel)]="matDateDestino"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="dpEndDeparture"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #dpEndDeparture disabled="false"></mat-datepicker>
-          </label>
+            <div
+              *ngIf="tipoVuelo == 'RT'"
+              class="m-0 p-0"
+              style="
+                width: 10% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+              "
+            >
+              <span style="width: 10% !important; color: #a9a9a9"> | </span>
+            </div>
+
+            <div
+              *ngIf="tipoVuelo == 'RT'"
+              class="m-0 p-0"
+              style="
+                width: 45% !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <input
+                placeholder="Regreso"
+                class="input-sin-borde"
+                matInput
+                [matDatepicker]="dpEndDeparture"
+                [min]="minEndDate"
+                autocomplete="off"
+                readonly="true"
+                (dateChange)="onBeginDateChange2($event)"
+                [(ngModel)]="matDateDestino"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpEndDeparture"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpEndDeparture disabled="false"></mat-datepicker>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -193,11 +225,36 @@
               alt=""
             />
 
-            <input
+            <!--
+              <input
               class="input-sin-borde"
               type="text"
               style="width: 44% !important"
             />
+            -->
+
+            <select
+              [(ngModel)]="personas"
+              style="
+                width: 10% !important;
+                border: 0;
+                outline: none;
+                background-color: white;
+              "
+              class="font-Nunito-Regular size-text-1 mr-2"
+              name="select"
+            >
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
 
             <span
               style="
@@ -210,6 +267,7 @@
             </span>
 
             <select
+              [(ngModel)]="cabinType"
               style="
                 width: 44% !important;
                 border: 0;

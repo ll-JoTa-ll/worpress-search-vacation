@@ -16,7 +16,7 @@
     >
       <div class="col-12 m-0 p-0">
         <div class="row m-0 p-0">
-          <div class="col-3 m-0 p-0 center-div-item-menu">
+          <div class="col-4 m-0 p-0 center-div-item-menu">
             <div class="row m-0 p-0">
               <div
                 class="col-4 m-0 p-0"
@@ -30,7 +30,6 @@
                   class="pr-3"
                   src="./assets/images/iconos/Paquetes_seleccionado.svg"
                   alt=""
-                  *ngIf="paqueteSel"
                   [routerLink]="['/paquetes']"
                   id="menu_paqueteSel"
                 />
@@ -38,18 +37,19 @@
                   class="pr-3"
                   src="./assets/images/iconos/Paquetes_deseleccionado.svg"
                   alt=""
-                  *ngIf="paqueteDes"
                   [routerLink]="['/paquetes']"
                   id="menu_paqueteDes"
                 />
               </div>
               <div
+                [routerLink]="['/paquetes']"
                 class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
                 style="
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   color: #000000 !important;
+                  cursor: pointer;
                 "
               >
                 Paquetes
@@ -57,14 +57,13 @@
             </div>
           </div>
 
-          <div class="col-3 m-0 p-0 center-div-item-menu">
+          <div class="col-4 m-0 p-0 center-div-item-menu">
             <div class="row m-0 p-0">
               <div class="col-4 m-0 p-0">
                 <img
                   class="pr-3"
                   src="./assets/images/iconos/Vuelo-hotel_seleccionado.svg"
                   alt=""
-                  *ngIf="vueloHotelSel"
                   [routerLink]="['/vuelo-hotel']"
                   id="menu_vueloHotelSel"
                 />
@@ -72,18 +71,19 @@
                   class="pr-3"
                   src="./assets/images/iconos/Vuelo-hotel_deseleccionado.svg"
                   alt=""
-                  *ngIf="vueloHotelDes"
                   [routerLink]="['/vuelo-hotel']"
                   id="menu_vueloHotelDes"
                 />
               </div>
               <div
+                [routerLink]="['/vuelo-hotel']"
                 class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
                 style="
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   color: #000000 !important;
+                  cursor: pointer;
                 "
               >
                 Vuelo+Hotel
@@ -91,14 +91,13 @@
             </div>
           </div>
 
-          <div class="col-3 m-0 p-0 center-div-item-menu">
+          <div class="col-4 m-0 p-0 center-div-item-menu">
             <div class="row m-0 p-0">
               <div class="col-4 m-0 p-0">
                 <img
                   class="pr-3"
                   src="./assets/images/iconos/Vuelo_seleccionado.svg"
                   alt=""
-                  *ngIf="vueloSel"
                   [routerLink]="['/vuelo']"
                   id="menu_vueloSel"
                 />
@@ -106,18 +105,19 @@
                   class="pr-3"
                   src="./assets/images/iconos/Vuelo_deseleccionado.svg"
                   alt=""
-                  *ngIf="vueloDes"
                   [routerLink]="['/vuelo']"
                   id="menu_vueloDes"
                 />
               </div>
               <div
+                [routerLink]="['/vuelo']"
                 class="col-8 m-0 p-0 sixe-text-1 font-Nunito-Regular"
                 style="
                   display: flex;
                   justify-content: center;
                   align-items: center;
                   color: #000000 !important;
+                  cursor: pointer;
                 "
               >
                 Vuelo
@@ -125,6 +125,7 @@
             </div>
           </div>
 
+          <!--
           <div class="col-3 m-0 p-0 center-div-item-menu">
             <div class="row m-0 p-0">
               <div class="col-4 m-0 p-0">
@@ -158,7 +159,7 @@
               </div>
             </div>
           </div>
-        </div>
+        --></div>
       </div>
 
       <div class="col-12 m-0 p-0 pt-2">

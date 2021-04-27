@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HeaderMenuService } from '../../../services/shared/header-menu.service';
 import { PachageService } from '../../../services/pachage.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -8,6 +8,9 @@ import { map, startWith } from 'rxjs/operators';
 import { SessionStorageService, LocalStorageService } from 'ngx-webstorage';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+
+declare var jquery: any;
+declare var $: any;
 
 interface ResultSearch {
   id: string;
@@ -20,7 +23,7 @@ interface ResultSearch {
   templateUrl: './paquetes.component.html',
   styleUrls: ['./paquetes.component.sass'],
 })
-export class PaquetesComponent implements OnInit {
+export class PaquetesComponent implements OnInit, AfterViewInit {
   selectedDestiny: boolean;
   destiny: ResultSearch;
   loadingmonths: boolean;
@@ -98,6 +101,7 @@ export class PaquetesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerMenuService.getMenuImage(1);
     this.monthsData = [
       {
         code: '',
@@ -106,6 +110,11 @@ export class PaquetesComponent implements OnInit {
     ];
     //this.monthControl.value = '';
     this.getDestination();
+  }
+
+  ngAfterViewInit() {
+    //this.getMenuImage(1);
+    this.headerMenuService.getMenuImage(1);
   }
 
   getDestination() {
@@ -119,6 +128,7 @@ export class PaquetesComponent implements OnInit {
       },
       (err) => {},
       () => {
+        this.headerMenuService.getMenuImage(1);
         this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
           map((value) => (typeof value === 'string' ? value : value.name)),
@@ -198,6 +208,40 @@ export class PaquetesComponent implements OnInit {
       //this.router.navigate(['result']);
     } else {
       //this.openSnackBar('Seleccione un destino');
+    }
+  }
+
+  getMenuImage(index) {
+    console.log('getMenuImage: ' + index);
+
+    $('#menu_paqueteSel').hide();
+    $('#menu_vueloHotelSel').hide();
+    $('#menu_vueloSel').hide();
+    //$('#menu_hotelSel').hide();
+    $('#menu_paqueteDes').show();
+    $('#menu_vueloHotelDes').show();
+    $('#menu_vueloDes').show();
+    //$('#menu_hotelSel').hide();
+    switch (index) {
+      case 1:
+        console.log('menu 1: paquetes');
+        $('#menu_paqueteSel').show();
+        $('#menu_paqueteDes').hide();
+        break;
+      case 2:
+        console.log('menu 2: vuelo+hotel');
+        $('#menu_vueloHotelSel').show();
+        $('#menu_vueloHotelDes').hide();
+        break;
+      case 3:
+        console.log('menu 3: vuelos');
+        $('#menu_vueloSel').show();
+        $('#menu_vueloDes').hide();
+        break;
+      case 4:
+        $('#menu_hotelSel').show();
+        $('#menu_hotelDes').hide();
+        break;
     }
   }
 }

@@ -1,4 +1,10 @@
-import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { HeaderMenuService } from '../../../services/shared/header-menu.service';
 import { environment } from '../../../../environments/environment';
 import { FlightService } from '../../../services/flight.service';
@@ -17,7 +23,7 @@ import {
   templateUrl: './vuelo.component.html',
   styleUrls: ['./vuelo.component.sass'],
 })
-export class VueloComponent implements OnInit {
+export class VueloComponent implements OnInit, AfterViewInit {
   claseVuelo: any[] = [];
   origins: any[] = [];
   destinys: any[] = [];
@@ -44,6 +50,9 @@ export class VueloComponent implements OnInit {
   matDateOrigen;
   matDateDestino;
 
+  personas;
+  cabinType;
+
   constructor(
     private headerMenuService: HeaderMenuService,
     private flightService: FlightService,
@@ -55,15 +64,21 @@ export class VueloComponent implements OnInit {
     this.claseVuelo.push(clase1);
     this.claseVuelo.push(clase2);
     this.claseVuelo.push(clase3);
-
+    this.personas = 2;
+    this.cabinType = '';
     this.headerMenuService.getMenuImage(3);
   }
 
   ngOnInit(): void {
+    this.headerMenuService.getMenuImage(3);
     this.origins = [];
     this.minCalendar.setDate(this.minCalendar.getDate() + 1);
     this.tipoVuelo = 'RT';
     this.getPriorityAirports();
+  }
+
+  ngAfterViewInit() {
+    this.headerMenuService.getMenuImage(3);
   }
 
   private _filter(value: string) {
@@ -135,6 +150,7 @@ export class VueloComponent implements OnInit {
       },
       () => {
         //console.log('resultado: ' + JSON.stringify(this.origins));
+        this.headerMenuService.getMenuImage(3);
 
         this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
           startWith(''),
@@ -248,6 +264,8 @@ export class VueloComponent implements OnInit {
     console.log('onBeginDateChange1');
     console.log('event: ' + event);
     console.log(this.matDateOrigen.toISOString());
+    this.minEndDate = this.matDateOrigen;
+    this.endDatePicker.open();
   }
 
   onBeginDateChange2(event) {
@@ -281,16 +299,33 @@ export class VueloComponent implements OnInit {
     if (this.tipoVuelo == 'MC') {
     }
 
+    const cabinType = this.cabinType;
+    let cabinTypeText = 'Todas';
+    switch (cabinType) {
+      case '':
+        cabinTypeText = 'Todas';
+        break;
+      case 'E':
+        cabinTypeText = 'Económica';
+        break;
+      case 'B':
+        cabinTypeText = 'Business';
+        break;
+      case 'F':
+        cabinTypeText = 'First';
+        break;
+    }
+
     const filter = {
       Ocompany: null,
       PartnerClub: false,
       type: this.tipoVuelo,
       lpassenger: [
-        { numberPassenger: '1', typePassenger: 'ADT' },
+        { numberPassenger: this.personas, typePassenger: 'ADT' },
         { numberPassenger: '0', typePassenger: 'CNN' },
         { numberPassenger: '0', typePassenger: 'INF' },
       ],
-      cabinType: { id: '', description: 'Todas' },
+      cabinType: { id: cabinType, description: cabinTypeText },
       scales: { id: '', description: 'Todos' },
       includesBaggage: this.inMaleta,
       fromFilter: fromFilter,
@@ -309,6 +344,26 @@ export class VueloComponent implements OnInit {
   }
 
   searchV2() {
+    const cb0 = {
+      id: '',
+      description: 'Todas',
+    };
+
+    const cb1 = {
+      id: 'E',
+      description: 'Económica',
+    };
+
+    const cb2 = {
+      id: 'B',
+      description: 'Business',
+    };
+
+    const cb3 = {
+      id: 'F',
+      description: 'First',
+    };
+
     const data = {
       Ocompany: null,
       PartnerClub: false,

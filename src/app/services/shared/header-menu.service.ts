@@ -15,17 +15,22 @@ export class HeaderMenuService {
     $('#menu_paqueteSel').hide();
     $('#menu_vueloHotelSel').hide();
     $('#menu_vueloSel').hide();
-    $('#menu_hotelSel').hide();
+    $('#menu_paqueteDes').show();
+    $('#menu_vueloHotelDes').show();
+    $('#menu_vueloDes').show();
     switch (index) {
       case 1:
+        console.log('menu 1: paquetes');
         $('#menu_paqueteSel').show();
         $('#menu_paqueteDes').hide();
         break;
       case 2:
+        console.log('menu 2: vuelo+hotel');
         $('#menu_vueloHotelSel').show();
         $('#menu_vueloHotelDes').hide();
         break;
       case 3:
+        console.log('menu 3: vuelos');
         $('#menu_vueloSel').show();
         $('#menu_vueloDes').hide();
         break;

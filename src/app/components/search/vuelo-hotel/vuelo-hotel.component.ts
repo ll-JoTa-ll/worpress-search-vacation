@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { HeaderMenuService } from '../../../services/shared/header-menu.service';
 import { environment } from '../../../../environments/environment';
 import { FlightService } from '../../../services/flight.service';
@@ -17,7 +17,7 @@ import {
   templateUrl: './vuelo-hotel.component.html',
   styleUrls: ['./vuelo-hotel.component.sass'],
 })
-export class VueloHotelComponent implements OnInit {
+export class VueloHotelComponent implements OnInit, AfterViewInit {
   origins: any[] = [];
   destinys: any[] = [];
   myControlOrigen = new FormControl('');
@@ -52,10 +52,15 @@ export class VueloHotelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.headerMenuService.getMenuImage(2);
     this.origins = [];
     this.minCalendar.setDate(this.minCalendar.getDate() + 1);
     this.tipoVuelo = 'RT';
     this.getPriorityAirports();
+  }
+
+  ngAfterViewInit() {
+    this.headerMenuService.getMenuImage(2);
   }
 
   private _filter(value: string) {
@@ -127,6 +132,8 @@ export class VueloHotelComponent implements OnInit {
       },
       () => {
         //console.log('resultado: ' + JSON.stringify(this.origins));
+
+        this.headerMenuService.getMenuImage(2);
 
         this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
           startWith(''),
@@ -220,6 +227,8 @@ export class VueloHotelComponent implements OnInit {
     console.log('onBeginDateChange1');
     console.log('event: ' + event);
     console.log(this.matDateOrigen.toISOString());
+    this.minEndDate = this.matDateOrigen;
+    this.endDatePicker.open();
   }
 
   onBeginDateChange2(event) {
