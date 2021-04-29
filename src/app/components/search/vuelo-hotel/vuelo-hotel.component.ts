@@ -11,6 +11,7 @@ import {
   MatDatepickerInputEvent,
   MatDatepicker,
 } from '@angular/material/datepicker';
+import { RoomsCounter } from '../../../models/rooms-counter.model';
 
 @Component({
   selector: 'app-vuelo-hotel',
@@ -42,6 +43,10 @@ export class VueloHotelComponent implements OnInit, AfterViewInit {
 
   matDateOrigen;
   matDateDestino;
+
+  roomModel: RoomsCounter[] = [];
+  roomsData: RoomsCounter[];
+  theme: string = 'normal';
 
   constructor(
     private headerMenuService: HeaderMenuService,
@@ -237,13 +242,36 @@ export class VueloHotelComponent implements OnInit, AfterViewInit {
     console.log(this.matDateDestino.toISOString());
   }
 
+  onSelectRoom(rooms: RoomsCounter[]) {
+    console.log('onSelectRoom');
+    console.log(JSON.stringify(rooms));
+    this.roomModel = rooms;
+  }
+
   search() {
+    let roomModel = this.roomModel;
+    console.log('roomModel: ' + JSON.stringify(roomModel));
+    if (roomModel.length == 0) {
+      return false;
+    }
+
+    console.log('this.matDateOrigen: ' + this.matDateOrigen);
+    if (this.matDateOrigen === undefined) {
+      return false;
+    }
+
+    console.log('this.matDateDestino: ' + this.matDateDestino);
+    if (this.matDateDestino === undefined) {
+      return false;
+    }
+
     const filter = {
       from: this.origen,
       to: this.destino,
       departureDate: this.matDateOrigen.toISOString(),
       returnDate: this.matDateDestino.toISOString(),
-      rooms: [{ adults: 2, children: 0, ages: [], passengers: [] }],
+      //rooms: [{ adults: 2, children: 0, ages: [], passengers: [] }],
+      rooms: roomModel,
       lBoard: [],
       lZone: [],
       lTripAdvisor: [],

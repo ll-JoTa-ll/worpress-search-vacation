@@ -21,7 +21,7 @@
 
     <div class="col-12 m-0 p-0 pt-3">
       <div class="row m-0 p-0">
-        <div class="col-4 m-0 p-0">
+        <div class="col-12 col-lg-4 m-0 p-0">
           <label class="label-input">
             <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
             <!--
@@ -75,7 +75,7 @@
           </label>
         </div>
 
-        <div class="col-4 m-0 p-0">
+        <div class="col-12 col-lg-4 m-0 p-0">
           <label class="label-input">
             <img src="./assets/images/iconos/vuelos/destino.svg" alt="" />
             <!--
@@ -129,7 +129,7 @@
           </label>
         </div>
 
-        <div class="col-4 m-0 p-0">
+        <div class="col-12 col-lg-4 m-0 p-0">
           <!--<label class="label-input"> </label>-->
 
           <div
@@ -217,7 +217,7 @@
 
     <div class="col-12 m-0 p-0 pt-3">
       <div class="row m-0 p-0">
-        <div class="col-4 m-0 p-0">
+        <div class="col-12 col-lg-4 m-0 p-0">
           <label class="label-input">
             <img
               class="pl-3"
@@ -285,7 +285,10 @@
           </label>
         </div>
 
-        <div class="col-4 m-0 p-0" style="display: flex; align-items: center">
+        <div
+          class="col-12 col-lg-4 m-0 p-0"
+          style="display: flex; align-items: center"
+        >
           <mat-checkbox
             class="example-margin font-Nunito-Regular size-text-1"
             [(ngModel)]="inMaleta"
@@ -294,10 +297,11 @@
           </mat-checkbox>
         </div>
 
-        <div class="col-4 m-0 p-0">
+        <div class="col-12 col-lg-4 m-0 p-0">
           <button
             (click)="search()"
             class="btn-buscar font-Nunito-Regular size-text-2"
+            style="height: 50px !important"
           >
             <img
               class="pr-3"

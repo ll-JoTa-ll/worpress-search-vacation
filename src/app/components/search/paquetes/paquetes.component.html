@@ -1,5 +1,6 @@
 <app-header>
   <div class="row m-0 p-0" style="padding-bottom: 100px !important">
+    <!--
     <div class="col-12 m-0 p-0">
       <div class="row m-0 p-0">
         <div class="col-4 m-0 p-0 size-text-1">A donde iremos?</div>
@@ -9,87 +10,79 @@
         <div class="col-4 m-0 p-0"></div>
       </div>
     </div>
+    -->
     <div class="col-12 m-0 p-0">
       <div class="row m-0 p-0">
         <div class="col-12 col-lg-4 m-0 p-0">
-          <!--
-          <label class="label-input">
-            <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
-            <input
-              class="input-sin-borde"
-              type="text"
-              placeholder="Elijamos un destino"
-              id="txtOrigen"
-            />
-          </label>
+          <div class="row m-0 p-0">
+            <div class="col-12 m-0 p-0 size-text-1">A donde iremos?</div>
 
-        -->
-
-          <label class="label-input">
-            <mat-label></mat-label>
-            <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
-            <input
-              type="text"
-              placeholder="Elijamos un destino"
-              aria-label="Number"
-              matInput
-              class="input-sin-borde"
-              [formControl]="myControl"
-              [matAutocomplete]="auto"
-            />
-            <mat-autocomplete
-              #auto="matAutocomplete"
-              (optionSelected)="onOptionSelected($event)"
-              [displayWith]="display"
-            >
-              <mat-option
-                *ngFor="let option of filteredOptions | async"
-                [value]="option"
-              >
-                {{ option.name | titlecase }}
-              </mat-option>
-            </mat-autocomplete>
-          </label>
+            <div class="col-12 m-0 p-0">
+              <label class="label-input">
+                <mat-label></mat-label>
+                <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
+                <input
+                  type="text"
+                  placeholder="Elijamos un destino"
+                  aria-label="Number"
+                  matInput
+                  class="input-sin-borde"
+                  [formControl]="myControl"
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="onOptionSelected($event)"
+                  [displayWith]="display"
+                >
+                  <mat-option
+                    *ngFor="let option of filteredOptions | async"
+                    [value]="option"
+                  >
+                    {{ option.name | titlecase }}
+                  </mat-option>
+                </mat-autocomplete>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="col-12 col-lg-4 m-0 p-0">
-          <label class="label-input">
-            <img
-              class="pl-3"
-              src="./assets/images/iconos/vuelos/calendario.svg"
-              alt=""
-            />
-            <!--
-            <input
-              class="input-sin-borde"
-              type="text"
-              placeholder="Salida"
-              style="width: 30% !important"
-              placeholder="Elijamos juntos"
-            />
-            -->
-            <select
-              style="
-                width: 85% !important;
-                border: 0;
-                outline: none;
-                background-color: white;
-                padding-left: 10px;
-              "
-              class="font-Nunito-Regular size-text-1 mr-2"
-              [formControl]="monthControl"
-            >
-              <option
-                class="option-month"
-                *ngFor="let month of monthsData"
-                (click)="onSelectMonth(month)"
-                value="{{ month.code }}"
-              >
-                {{ month.name }}
-              </option>
-              >
-            </select>
-          </label>
+          <div class="row m-0 p-0">
+            <div class="col-12 m-0 p-0 size-text-1">Cuando viajaremos?</div>
+
+            <div class="col-12 m-0 p-0">
+              <label class="label-input">
+                <img
+                  class="pl-3"
+                  src="./assets/images/iconos/vuelos/calendario.svg"
+                  alt=""
+                />
+
+                <select
+                  style="
+                    width: 85% !important;
+                    border: 0;
+                    outline: none;
+                    background-color: white;
+                    padding-left: 10px;
+                  "
+                  class="font-Nunito-Regular size-text-1 mr-2"
+                  [formControl]="monthControl"
+                >
+                  <option
+                    class="option-month"
+                    *ngFor="let month of monthsData"
+                    (click)="onSelectMonth(month)"
+                    value="{{ month.code }}"
+                  >
+                    {{ month.name }}
+                  </option>
+                  >
+                </select>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div class="col-12 col-lg-4 m-0 p-0">

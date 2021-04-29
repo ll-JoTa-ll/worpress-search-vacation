@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="preview" (click)="show = !show">
+    <div class="preview-counter">
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26.7"
+          height="18.972"
+          viewBox="0 0 26.7 18.972"
+        >
+          <defs>
+            <style>
+              .a {
+                fill: #0eacc1;
+              }
+            </style>
+          </defs>
+          <path
+            class="a"
+            d="M25.322,64.488V57.907a1.637,1.637,0,0,0-1.635-1.635H3.013a1.637,1.637,0,0,0-1.635,1.635v6.581A1.626,1.626,0,0,0,0,66.093v4.073a.515.515,0,0,0,.515.515h.552v2.541a.515.515,0,0,0,.515.515h.93v.992a.515.515,0,1,0,1.03,0v-.992H23.159v.992a.515.515,0,1,0,1.03,0v-.992h.93a.515.515,0,0,0,.515-.515V70.681h.552a.515.515,0,0,0,.515-.515V66.093A1.626,1.626,0,0,0,25.322,64.488ZM2.408,57.907a.606.606,0,0,1,.605-.605H23.687a.606.606,0,0,1,.605.605V64.47H22.484c.36-.387.726-.795,1.1-1.231a.515.515,0,0,0,0-.676,42.007,42.007,0,0,0-4.45-4.45.515.515,0,0,0-.676,0,42.006,42.006,0,0,0-4.449,4.45.515.515,0,0,0,0,.676c.379.436.745.843,1.1,1.231H11.582c.36-.387.726-.795,1.1-1.231a.515.515,0,0,0,0-.676,42.02,42.02,0,0,0-4.45-4.45.515.515,0,0,0-.676,0,42.019,42.019,0,0,0-4.45,4.45.515.515,0,0,0,0,.676c.379.436.745.843,1.1,1.231H2.408ZM16.539,64.47c-.474-.486-.953-1-1.452-1.569A40.211,40.211,0,0,1,18.8,59.187,40.211,40.211,0,0,1,22.515,62.9c-.5.565-.978,1.082-1.452,1.569Zm-10.9,0c-.474-.487-.953-1-1.452-1.569A40.219,40.219,0,0,1,7.9,59.187,40.22,40.22,0,0,1,11.613,62.9c-.5.565-.978,1.082-1.452,1.569ZM24.6,72.707H2.1V70.681H24.6Zm1.067-3.056H1.03V66.093a.594.594,0,0,1,.593-.593H25.077a.594.594,0,0,1,.593.593v3.558Z"
+            transform="translate(0 -56.272)"
+          />
+        </svg>
+      </span>
+      <span class="counter">{{ numberOfRooms }}</span>
+    </div>
+    <div class="preview-counter">
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="15.484"
+          height="17.21"
+          viewBox="0 0 15.484 17.21"
+        >
+          <defs>
+            <style>
+              .a {
+                fill: #0eacc1;
+              }
+            </style>
+          </defs>
+          <g transform="translate(-20.625 -17)">
+            <circle
+              class="a"
+              cx="4.271"
+              cy="4.271"
+              r="4.271"
+              transform="translate(24.095 17)"
+            />
+            <path
+              class="a"
+              d="M28.367,150a7.742,7.742,0,0,0-7.742,7.742H36.109A7.742,7.742,0,0,0,28.367,150Z"
+              transform="translate(0 -123.532)"
+            />
+          </g>
+        </svg>
+      </span>
+      <span class="counter">{{ numberOfPassengers }}</span>
+    </div>
+  </div>
+  <div id="panelHabitaciones" class="panel" [ngClass]="{ 'dm-hidden': !show }">
+    <div class="error-desc" *ngIf="errorMessage !== ''">
+      *{{ errorMessage }}
+    </div>
+    <form *ngIf="form" [formGroup]="form">
+      <div formArrayName="rooms">
+        <div
+          class="adult-list"
+          *ngFor="let room of roomsArray['controls']; let j = index"
+        >
+          <div formGroupName="{{ j }}">
+            <div class="room-title">
+              <span class="main-font">Habitación {{ j + 1 }}</span
+              ><br />
+              <span
+                class="remove-font"
+                *ngIf="j > 0 && j === roomsArray['controls'].length - 1"
+                (click)="removeRoom()"
+                >Eliminar x</span
+              >
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <div class="info">
+                <span class="main-font">Adultos</span
+                ><span class="secondary-font">Desde 18 años</span>
+              </div>
+              <div class="control">
+                <div class="counter-panel">
+                  <button
+                    class="sign-btn border-left"
+                    mat-stroked-button
+                    (click)="removeAdult(j)"
+                  >
+                    <mat-icon class="small-icon">remove</mat-icon>
+                  </button>
+                  <input
+                    class="sign-input main-font"
+                    type="text"
+                    formControlName="adults"
+                  />
+                  <button
+                    class="sign-btn border-right"
+                    mat-stroked-button
+                    (click)="addAdult(j)"
+                  >
+                    <mat-icon class="small-icon">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="info">
+                <span class="main-font">Menores</span
+                ><span class="secondary-font">Hasta 17 años</span>
+              </div>
+              <div class="control">
+                <div class="counter-panel">
+                  <button
+                    class="sign-btn border-left"
+                    mat-stroked-button
+                    (click)="removeChild(j)"
+                  >
+                    <mat-icon class="small-icon">remove</mat-icon>
+                  </button>
+                  <input
+                    class="sign-input main-font"
+                    type="text"
+                    formControlName="children"
+                  />
+                  <button
+                    class="sign-btn border-right"
+                    mat-stroked-button
+                    (click)="addChild(j)"
+                  >
+                    <mat-icon class="small-icon">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                form.get('rooms')['controls'][j].get('ages')['controls'].length
+              "
+            >
+              <span class="main-font">Edad de los menores</span>
+              <div formArrayName="ages">
+                <div
+                  class="adult-list"
+                  *ngFor="
+                    let age of form.get('rooms')['controls'][j].get('ages')[
+                      'controls'
+                    ];
+                    let k = index
+                  "
+                >
+                  <div formGroupName="{{ k }}">
+                    <div class="row">
+                      <div class="main-font">Menor {{ k + 1 }}</div>
+                      <select
+                        formControlName="age"
+                        value="0"
+                        class="age-select"
+                        (change)="updateAgeModel(j, k)"
+                      >
+                        <option
+                          *ngFor="let item of ageList"
+                          value="{{ item.id }}"
+                        >
+                          {{ item.description }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <span
+      *ngIf="numberOfRooms < 9 && numberOfPassengers < 9"
+      (click)="addRoom()"
+      class="dm-link"
+      style="float: right"
+      >Agregar Habitacion</span
+    ><br />
+  </div>
+</div>

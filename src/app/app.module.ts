@@ -15,6 +15,7 @@ import { PaquetesComponent } from './components/search/paquetes/paquetes.compone
 import { VueloHotelComponent } from './components/search/vuelo-hotel/vuelo-hotel.component';
 import { HotelComponent } from './components/search/hotel/hotel.component';
 import { HeaderComponent } from './components/shared/header/header.component';
+import { RoomsCounterComponent } from './components/shared/rooms-counter/rooms-counter.component';
 
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     VueloHotelComponent,
     HotelComponent,
     HeaderComponent,
+    RoomsCounterComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatDividerModule,
   ],
   providers: [
     {
