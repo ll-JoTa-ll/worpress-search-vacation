@@ -27,6 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
+import { HotelxComponent } from './components/search/hotelx/hotelx.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatDividerModule } from '@angular/material/divider';
     HotelComponent,
     HeaderComponent,
     RoomsCounterComponent,
+    HotelxComponent,
   ],
   imports: [
     BrowserModule,

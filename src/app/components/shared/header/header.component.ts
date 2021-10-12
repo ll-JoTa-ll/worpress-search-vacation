@@ -43,11 +43,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     $('#menu_paqueteSel').hide();
     $('#menu_vueloHotelSel').hide();
     $('#menu_vueloSel').hide();
-    //$('#menu_hotelSel').hide();
+    $('#menu_hotelSel').hide();
     $('#menu_paqueteDes').show();
     $('#menu_vueloHotelDes').show();
     $('#menu_vueloDes').show();
-    //$('#menu_hotelSel').hide();
+    $('#menu_hotelDes').show();
     switch (index) {
       case 1:
         console.log('menu 1: paquetes');
@@ -68,8 +68,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/vuelo']);
         break;
       case 4:
+        console.log('menu 4: hotel');
         $('#menu_hotelSel').show();
         $('#menu_hotelDes').hide();
+        this.router.navigate(['/hotel']);
         break;
     }
   }

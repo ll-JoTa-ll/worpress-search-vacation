@@ -1,0 +1,225 @@
+<app-header>
+  <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0"></div>
+
+    <div class="col-12 m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="row m-0 p-0">
+            <div class="col-12 m-0 p-0 size-text-1">Destino</div>
+            <div class="col-12 m-0 p-0">
+              <label class="label-input">
+                <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
+                <!--
+                <input
+                  class="input-sin-borde"
+                  type="text"
+                  placeholder="Origen"
+                  id="txtOrigen"
+                />
+                -->
+                <input
+                  type="text"
+                  placeholder="Destino"
+                  aria-label="Number"
+                  matInput
+                  class="input-sin-borde"
+                  [formControl]="myControlOrigen"
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="onOptionSelectedOrigen($event)"
+                  [displayWith]="display"
+                >
+                  <mat-option
+                    *ngFor="let option of filteredOptionsOrigen | async"
+                    [value]="option"
+                  >
+                    <mat-icon
+                      *ngIf="
+                        option.icon &&
+                          option.icon !== '' &&
+                          option.icon === 'A';
+                        else elseTem
+                      "
+                    >
+                      local_airport
+                    </mat-icon>
+
+                    <ng-template #elseTem>
+                      <mat-icon
+                        *ngIf="
+                          option.icon &&
+                            option.icon !== '' &&
+                            option.icon === 'C';
+                          else elseTem
+                        "
+                        >location_city</mat-icon
+                      >
+                    </ng-template>
+
+                    {{ option.name | titlecase }}
+                  </mat-option>
+                </mat-autocomplete>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-11 col-md-4 col-lg-4">
+          <div class="row m-0 p-0">
+            <div class="col-12 m-0 p-0 size-text-1">Fechas</div>
+            <div class="col-12 m-0 p-0">
+              <div
+                class="row m-0 p-0"
+                style="
+                  border-radius: 5px;
+                  border: 1px solid #a9a9a9;
+                  height: 50px !important;
+                "
+              >
+                <div
+                  class="m-0 p-0"
+                  style="
+                    width: 45% !important;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    placeholder="Salida"
+                    class="input-sin-borde"
+                    matInput
+                    [matDatepicker]="dpBeginDeparture"
+                    [min]="minCalendar"
+                    autocomplete="off"
+                    readonly="true"
+                    (dateChange)="onBeginDateChange1($event)"
+                    [(ngModel)]="matDateOrigen"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dpBeginDeparture"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #dpBeginDeparture
+                    disabled="false"
+                  ></mat-datepicker>
+                </div>
+
+                <div
+                  class="m-0 p-0"
+                  style="
+                    width: 10% !important;
+                    display: flex !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                  "
+                >
+                  <span style="width: 10% !important; color: #a9a9a9"> | </span>
+                </div>
+
+                <div
+                  class="m-0 p-0"
+                  style="
+                    width: 45% !important;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    placeholder="Regreso"
+                    class="input-sin-borde"
+                    matInput
+                    [matDatepicker]="dpEndDeparture"
+                    [min]="minEndDate"
+                    autocomplete="off"
+                    readonly="true"
+                    (dateChange)="onBeginDateChange2($event)"
+                    [(ngModel)]="matDateDestino"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dpEndDeparture"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #dpEndDeparture
+                    disabled="false"
+                  ></mat-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="row m-0 p-0">
+            <div class="col-12 m-0 p-0 size-text-1">Personas</div>
+            <div class="col-12 m-0 p-0">
+              <label class="label-input">
+                <img
+                  class="pl-3"
+                  src="./assets/images/iconos/vuelos/persona.svg"
+                  alt=""
+                />
+
+                <!--
+                  <input
+                  class="input-sin-borde"
+                  type="text"
+                  style="width: 44% !important"
+                />
+                -->
+
+                <select
+                  [(ngModel)]="personas"
+                  style="
+                    width: 10% !important;
+                    border: 0;
+                    outline: none;
+                    background-color: white;
+                  "
+                  class="font-Nunito-Regular size-text-1 mr-2"
+                  name="select"
+                >
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4 text-left">
+      <button
+        (click)="search()"
+        class="btn-buscar font-Nunito-Regular size-text-2"
+        style="height: 50px !important"
+      >
+        <img class="pr-3" src="./assets/images/iconos/vuelos/lupa.svg" alt="" />
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <ngx-spinner
+    bdColor="rgba(51, 51, 51, 0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-spin-fade-rotating"
+    style="width: 100% !important; height: 100% !important"
+  ></ngx-spinner>
+</app-header>

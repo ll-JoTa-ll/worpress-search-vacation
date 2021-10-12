@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HotelComponent } from './components/search/hotel/hotel.component';
+import { HotelxComponent } from './components/search/hotelx/hotelx.component';
 import { PaquetesComponent } from './components/search/paquetes/paquetes.component';
 import { VueloHotelComponent } from './components/search/vuelo-hotel/vuelo-hotel.component';
 import { VueloComponent } from './components/search/vuelo/vuelo.component';
@@ -17,7 +18,11 @@ const routes: Routes = [
     component: VueloHotelComponent,
     runGuardsAndResolvers: 'always',
   },
-  { path: 'hotel', component: HotelComponent, runGuardsAndResolvers: 'always' },
+  {
+    path: 'hotel',
+    component: HotelxComponent,
+    runGuardsAndResolvers: 'always',
+  },
 ];
 
 @NgModule({

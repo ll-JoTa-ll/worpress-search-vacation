@@ -15,9 +15,11 @@ export class HeaderMenuService {
     $('#menu_paqueteSel').hide();
     $('#menu_vueloHotelSel').hide();
     $('#menu_vueloSel').hide();
+    $('#menu_hotelSel').hide();
     $('#menu_paqueteDes').show();
     $('#menu_vueloHotelDes').show();
     $('#menu_vueloDes').show();
+    $('#menu_hotelDes').show();
     switch (index) {
       case 1:
         console.log('menu 1: paquetes');
@@ -35,9 +37,11 @@ export class HeaderMenuService {
         $('#menu_vueloDes').hide();
         break;
       case 4:
+        console.log('menu 4: hoteles');
         $('#menu_hotelSel').show();
         $('#menu_hotelDes').hide();
         break;
     }
+    console.log('**************** getMenuImage FIN ****************');
   }
 }
