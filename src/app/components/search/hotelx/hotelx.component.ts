@@ -130,9 +130,59 @@ export class HotelxComponent implements OnInit {
           map((name) => (name ? this._filter(name) : this.origins.slice()))
         );
 
-        this.spinner.hide();
+        //this.spinner.hide();
 
-        //this.getAirports();
+        this.getAirports();
+      }
+    );
+  }
+
+  getAirports() {
+    //this.spinner.show();
+    const _origins = [];
+    this.flightService.getAirports().subscribe(
+      (result: any) => {
+        if (result) {
+          const airports = result.lairports ? result.lairports : [];
+          const cities = result.lcities ? result.lcities : [];
+          airports.forEach((airport) => {
+            _origins.push({
+              code: airport.iataCode,
+              countryCode: airport.countryCode,
+              name: airport.name,
+              searchName: airport.searchName,
+              priority: airport.priority,
+              /* icon: 'local_airport' */
+              icon: 'A',
+            });
+          });
+          cities.forEach((city) => {
+            _origins.push({
+              code: city.iataCode,
+              countryCode: city.countryCode,
+              name: city.name,
+              searchName: city.searchName,
+              priority: city.priority,
+              /* icon: 'location_city' */
+              icon: 'C',
+            });
+          });
+          _origins.sort((a, b) => b.priority - a.priority);
+        }
+      },
+      (err) => {
+        /*  console.log('Error: ', err); */
+        this.spinner.hide();
+      },
+      () => {
+        this.origins = _origins;
+        //this.sessionService.setOrigins(this.origins);
+        this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
+          startWith(''),
+          map((value) => (typeof value === 'string' ? value : value.name)),
+          map((name) => (name ? this._filter(name) : this.origins.slice()))
+        );
+        this.spinner.hide();
       }
     );
   }

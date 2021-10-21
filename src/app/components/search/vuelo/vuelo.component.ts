@@ -164,15 +164,15 @@ export class VueloComponent implements OnInit, AfterViewInit {
           map((name) => (name ? this._filter(name) : this.destinys.slice()))
         );
 
-        this.spinner.hide();
+        //this.spinner.hide();
 
-        //this.getAirports();
+        this.getAirports();
       }
     );
   }
 
   getAirports() {
-    this.spinner.show();
+    //this.spinner.show();
     const _origins = [];
     this.flightService.getAirports().subscribe(
       (result: any) => {
@@ -206,6 +206,7 @@ export class VueloComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         /*  console.log('Error: ', err); */
+        this.spinner.hide();
       },
       () => {
         this.origins = _origins;
