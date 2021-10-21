@@ -131,7 +131,6 @@ export class HotelxComponent implements OnInit {
         );
 
         //this.spinner.hide();
-
         this.getAirports();
       }
     );
