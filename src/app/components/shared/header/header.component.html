@@ -16,178 +16,254 @@
     >
       <div class="col-12 m-0 p-0">
         <div class="row m-0 p-0">
-          <div class="col-3 m-0 p-0 center-div-item-menu">
-            <div class="row m-0 p-0">
-              <div
-                class="col-4 m-0 p-0"
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Paquetes_seleccionado.svg"
-                  alt=""
-                  [routerLink]="['/paquetes']"
-                  id="menu_paqueteSel"
-                />
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Paquetes_deseleccionado.svg"
-                  alt=""
-                  [routerLink]="['/paquetes']"
-                  id="menu_paqueteDes"
-                />
-              </div>
-              <div
-                [routerLink]="['/paquetes']"
-                class="
-                  d-none d-lg-flex
-                  col-8
-                  m-0
-                  p-0
-                  sixe-text-1
-                  font-Nunito-Regular
-                "
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  color: #000000 !important;
-                  cursor: pointer;
-                "
-              >
-                Paquetes
+      
+          <div
+          class="col-4 m-0 p-0 center-div-item-menu"
+          style="cursor: pointer"
+          (click)="selectOption(1)"
+        >
+          <div class="row m-0 p-0">
+            <div
+              *ngIf="selectedOption !== 1"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <img
+              
+                src="../../assets/images/filter-panel/{{textpacage}}.svg"
+                class="pr-3"
+              />
+            </div>
+
+            <div
+              *ngIf="selectedOption === 1"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <div  class="row m-0 p-0">
+                <div class="col-12 m-0 p-0 border-icon">
+                  <div
+                    class="row m-0 p-0"
+                    style="
+                      background-color: white !important;
+                      padding: 5px !important;
+                      margin: 3px !important;
+                    "
+                  >
+                    <img
+                    
+                      src="../../assets/images/filter-panel/package-selected.svg"
+                      class="pr-3"
+                      style="padding-left: 0px; padding-right: 0px"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div
+            class="
+              col-12 col-md-6 col-lg-6
+              option-title
+              texto-menu-flex
+            "
+            [ngClass]="{ 'option-title-selected': selectedOption === 1 }"
+          >
+            Paquetes
           </div>
 
-          <div class="col-3 m-0 p-0 center-div-item-menu">
-            <div class="row m-0 p-0">
-              <div class="col-4 m-0 p-0">
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Vuelo-hotel_seleccionado.svg"
-                  alt=""
-                  [routerLink]="['/vuelo-hotel']"
-                  id="menu_vueloHotelSel"
-                />
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Vuelo-hotel_deseleccionado.svg"
-                  alt=""
-                  [routerLink]="['/vuelo-hotel']"
-                  id="menu_vueloHotelDes"
-                />
-              </div>
+
+            <div  *ngIf="selectedOption === 1" class="col-12 m-0 p-0 paque">
               <div
-                [routerLink]="['/vuelo-hotel']"
-                class="
-                  d-none d-lg-flex
-                  col-8
-                  m-0
-                  p-0
-                  sixe-text-1
-                  font-Nunito-Regular
-                "
+                class="row m-0 p-0 pt-2"
                 style="
                   display: flex;
                   justify-content: center;
                   align-items: center;
-                  color: #000000 !important;
-                  cursor: pointer;
                 "
+                
               >
-                Vuelo+Hotel
-              </div>
-            </div>
-          </div>
-
-          <div class="col-3 m-0 p-0 center-div-item-menu">
-            <div class="row m-0 p-0">
-              <div class="col-4 m-0 p-0">
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Vuelo_seleccionado.svg"
-                  alt=""
-                  [routerLink]="['/vuelo']"
-                  id="menu_vueloSel"
-                />
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/Vuelo_deseleccionado.svg"
-                  alt=""
-                  [routerLink]="['/vuelo']"
-                  id="menu_vueloDes"
-                />
-              </div>
-              <div
-                [routerLink]="['/vuelo']"
-                class="
-                  d-none d-lg-flex
-                  col-8
-                  m-0
-                  p-0
-                  sixe-text-1
-                  font-Nunito-Regular
-                "
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  color: #000000 !important;
-                  cursor: pointer;
-                "
-              >
-                Vuelo
-              </div>
-            </div>
-          </div>
-
-          <div class="col-3 m-0 p-0 center-div-item-menu">
-            <div class="row m-0 p-0">
-              <div class="col-4 m-0 p-0">
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/hotel_seleccionado.svg"
-                  alt=""
-                  [routerLink]="['/hotel']"
-                  id="menu_hotelSel"
-                />
-                <img
-                  class="pr-3"
-                  src="./assets/images/iconos/hotel_deseleccionado.svg"
-                  alt=""
-                  [routerLink]="['/hotel']"
-                  id="menu_hotelDes"
-                />
-              </div>
-              <div
-                [routerLink]="['/hotel']"
-                class="
-                  d-none d-lg-flex
-                  col-8
-                  m-0
-                  p-0
-                  sixe-text-1
-                  font-Nunito-Regular
-                "
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  color: #000000 !important;
-                  cursor: pointer;
-                "
-              >
-                Hotel
+                <div
+                  class="col-12 m-0 p-0"
+                  style="
+                    height: 4px;
+                    width: 80%;
+                    background: linear-gradient(
+                      90.2deg,
+                      #e82d56 36.08%,
+                      #18acb3 86.43%
+                    );
+                  "
+                ></div>
               </div>
             </div>
           </div>
         </div>
+
+          <div
+          class="col-4 m-0 p-0 center-div-item-menu"
+          style="cursor: pointer !important"
+          (click)="selectOption(3)"
+        >
+       
+
+          <div class="row m-0 p-0">
+            <div
+              *ngIf="selectedOption !== 3"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <img
+                src="../../assets/images/filter-panel/flight.svg"
+                class="option-icon"
+               
+              />
+            </div>
+
+            <div
+              *ngIf="selectedOption === 3"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <div   class="row m-0 p-0">
+                <div class="col-12 m-0 p-0 border-icon">
+                  <div
+                    class="row m-0 p-0"
+                    style="
+                      background-color: white !important;
+                      padding: 5px !important;
+                      margin: 3px !important;
+                    "
+                  >
+                    <img
+                   
+                      src="../../assets/images/filter-panel/flight-selected.svg"
+                      class="option-icon"
+                      style="padding-left: 0px; padding-right: 0px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="
+                col-12 col-md-6 col-lg-6
+                option-title
+                texto-menu-flex
+              "
+              [ngClass]="{ 'option-title-selected': selectedOption === 3 }"
+            >
+              Vuelos
+            </div>
+
+            <div *ngIf="selectedOption === 3"  id="vuelos" class="col-12 m-0 p-0 vue">
+              <div
+                class="row m-0 p-0 pt-2"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <div
+                  class="col-12 m-0 p-0"
+                  style="
+                    height: 4px;
+                    width: 80%;
+                    background: linear-gradient(
+                      90.2deg,
+                      #e82d56 36.08%,
+                      #18acb3 86.43%
+                    );
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    
+       
+          <div
+          class="col-4 m-0 p-0 center-div-item-menu"
+          (click)="selectOption(4)"
+          style="cursor: pointer"
+        >
+          <div class="row m-0 p-0">
+            <div
+              *ngIf="selectedOption !== 4"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <img
+              
+                src="../../assets/images/filter-panel/hotel.svg"
+                class="option-icon"
+              />
+            </div>
+
+            <div
+              *ngIf="selectedOption === 4"
+              class="col-12 col-md-6 col-lg-6 m-0 p-0 imagen-menu-flex"
+            >
+              <div  class="row m-0 p-0">
+                <div class="col-12 m-0 p-0 border-icon">
+                  <div
+                    class="row m-0 p-0"
+                    style="
+                      background-color: white !important;
+                      padding: 5px !important;
+                      margin: 3px !important;
+                    "
+                  >
+                    <img
+                    
+                      src="../../assets/images/filter-panel/hotel-selected.svg"
+                      class="option-icon"
+                      style="padding-left: 0px; padding-right: 0px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="
+                col-12 col-md-6 col-lg-6
+                option-title
+                texto-menu-flex
+              "
+              [ngClass]="{ 'option-title-selected': selectedOption === 4 }"
+            >
+              Hoteles
+            </div>
+
+            <div *ngIf="selectedOption === 4"  id="hoteles" class="col-12 m-0 p-0 hotel">
+              <div
+                class="row m-0 p-0 pt-2"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+              
+                <div
+                  class="col-12 m-0 p-0"
+                  style="
+                    height: 4px;
+                    width: 80%;
+                    background: linear-gradient(
+                      90.2deg,
+                      #e82d56 36.08%,
+                      #18acb3 86.43%
+                    );
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+          
+        </div>
       </div>
+
 
       <div class="col-12 m-0 p-0 pt-2">
         <div class="row m-0 p-0">
@@ -204,6 +280,8 @@
       >
         <ng-content style="width: 100% !important"></ng-content>
       </div>
+
+      
     </div>
   </div>
 </div>

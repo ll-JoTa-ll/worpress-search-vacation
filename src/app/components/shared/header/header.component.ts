@@ -19,6 +19,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   vueloDes: boolean = true;
   hotelSel: boolean = false;
   hotelDes: boolean = true;
+  validPackage = true;
+  validHotel = false;
+  validFlight = false;
+  selectedOption;
+  textpacage = 'package';
 
   constructor(
     private headerMenuService: HeaderMenuService,
@@ -30,11 +35,49 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     console.log('HeaderComponent ngOnInit');
+    this.initOptions();
+    let data = window.location.pathname;
+    if (data === '/vuelo') {
+      this.selectedOption = 3;
+    } else if (data === '/hotel'){
+      this.selectedOption = 4;
+    } else if (data === '/paquetes') {
+      this.selectedOption = 1;
+    }
+  }
+
+  initOptions() {
+   /*  this.selectedOption = 1; */
+    // this.options = Options;
   }
 
   ngAfterViewInit() {
     console.log('HeaderComponent ngAfterViewInit');
     //this.cambiarMenu(3);
+  }
+
+  selectOption(option) {
+  
+    // this.options.forEach(element => { element.selected = false; });
+    // option.selected = true;
+
+    switch (option) {
+      case 1:
+        this.router.navigate(['paquetes']);
+        break;
+      case 4:
+        
+        
+        this.router.navigate(['hotel']);
+        break;
+      case 3:
+        this.router.navigate(['vuelo']);
+        break;
+      case 3:
+        break;
+      case 5:
+        break;
+    }
   }
 
   cambiarMenu(index) {

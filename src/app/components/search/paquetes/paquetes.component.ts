@@ -8,6 +8,10 @@ import { map, startWith } from 'rxjs/operators';
 import { SessionStorageService, LocalStorageService } from 'ngx-webstorage';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import { environment } from '../../../../environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { FlightService } from 'src/app/services/flight.service';
+import { ConstantService } from 'src/app/services/constant.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var jquery: any;
 declare var $: any;
@@ -35,7 +39,12 @@ export class PaquetesComponent implements OnInit, AfterViewInit {
   myControl = new FormControl('');
   destinies: ResultSearch[];
   filteredOptions: Observable<any[]>;
-
+  filteredOptionsOrigen: Observable<any[]>;
+  filteredOptionsDestino: Observable<any[]>;
+  origins: any[] = [];
+  destinys: any[] = [];
+  myControlOrigen = new FormControl('');
+  myControlDestino = new FormControl('');
   monthTypes = [
     {
       code: 0,
@@ -95,7 +104,11 @@ export class PaquetesComponent implements OnInit, AfterViewInit {
     private headerMenuService: HeaderMenuService,
     private pachageService: PachageService,
     private sessionStorageService: SessionStorageService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private spinner: NgxSpinnerService,
+    private flightService: FlightService,
+    private sesion: ConstantService,
+    private snackBar: MatSnackBar
   ) {
     this.headerMenuService.getMenuImage(1);
   }
@@ -109,7 +122,23 @@ export class PaquetesComponent implements OnInit, AfterViewInit {
       },
     ];
     //this.monthControl.value = '';
-    this.getDestination();
+    let dest = this.sesion.getDestinos();
+    if (dest != null) {
+        this.destinies = dest;
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map((value) => (typeof value === 'string' ? value : value.name)),
+          map((name) => (name ? this._filter(name) : this.destinies.slice()))
+        );
+    } else {
+      this.getDestination();
+    }
+    
+    this.origins = this.sesion.getOrigins();
+    if (!this.origins || this.origins.length === 0) {
+      this.origins = [];
+      this.getPriorityAirports();
+    }
   }
 
   ngAfterViewInit() {
@@ -117,10 +146,147 @@ export class PaquetesComponent implements OnInit, AfterViewInit {
     this.headerMenuService.getMenuImage(1);
   }
 
+  getPriorityAirports() {
+    this.spinner.show();
+    this.flightService.getPriorityAirports().subscribe(
+      (result: any) => {
+        /* console.log(result); */
+        if (result) {
+          const airports = result.lairports ? result.lairports : [];
+          const cities = result.lcities ? result.lcities : [];
+          airports.forEach((airport) => {
+            this.origins.push({
+              code: airport.iataCode,
+              countryCode: airport.countryCode,
+              name: airport.name,
+              searchName: airport.searchName,
+              priority: airport.priority,
+              /* icon: 'local_airport' */
+              icon: 'A',
+            });
+            this.destinys.push({
+              code: airport.iataCode,
+              countryCode: airport.countryCode,
+              name: airport.name,
+              searchName: airport.searchName,
+              priority: airport.priority,
+              /* icon: 'local_airport' */
+              icon: 'A',
+            });
+          });
+          cities.forEach((city) => {
+            this.origins.push({
+              code: city.iataCode,
+              countryCode: city.countryCode,
+              name: city.name,
+              searchName: city.searchName,
+              priority: city.priority,
+              /* icon: 'location_city' */
+              icon: 'C',
+            });
+            this.destinys.push({
+              code: city.iataCode,
+              countryCode: city.countryCode,
+              name: city.name,
+              searchName: city.searchName,
+              priority: city.priority,
+              /* icon: 'location_city' */
+              icon: 'C',
+            });
+          });
+          this.origins.sort((a, b) => b.priority - a.priority);
+          this.destinys.sort((a, b) => b.priority - a.priority);
+        }
+      },
+      (err) => {
+        /*   console.log('Error: ', err); */
+      },
+      () => {
+        //console.log('resultado: ' + JSON.stringify(this.origins));
+        this.headerMenuService.getMenuImage(3);
+
+        this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
+          startWith(''),
+          map((value) => (typeof value === 'string' ? value : value.name)),
+          map((name) => (name ? this._filter(name) : this.origins.slice()))
+        );
+
+        this.filteredOptionsDestino = this.myControlDestino.valueChanges.pipe(
+          startWith(''),
+          map((value) => (typeof value === 'string' ? value : value.name)),
+          map((name) => (name ? this._filter(name) : this.destinys.slice()))
+        );
+
+        //this.spinner.hide();
+
+        this.getAirports();
+      }
+    );
+  }
+
+  getAirports() {
+    //this.spinner.show();
+    const _origins = [];
+    this.flightService.getAirports().subscribe(
+      (result: any) => {
+        if (result) {
+          const airports = result.lairports ? result.lairports : [];
+          const cities = result.lcities ? result.lcities : [];
+          airports.forEach((airport) => {
+            _origins.push({
+              code: airport.iataCode,
+              countryCode: airport.countryCode,
+              name: airport.name,
+              searchName: airport.searchName,
+              priority: airport.priority,
+              /* icon: 'local_airport' */
+              icon: 'A',
+            });
+          });
+          cities.forEach((city) => {
+            _origins.push({
+              code: city.iataCode,
+              countryCode: city.countryCode,
+              name: city.name,
+              searchName: city.searchName,
+              priority: city.priority,
+              /* icon: 'location_city' */
+              icon: 'C',
+            });
+          });
+          _origins.sort((a, b) => b.priority - a.priority);
+        }
+      },
+      (err) => {
+        /*  console.log('Error: ', err); */
+        this.spinner.hide();
+      },
+      () => {
+        this.origins = _origins;
+        //this.sessionService.setOrigins(this.origins);
+        this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
+          startWith(''),
+          map((value) => (typeof value === 'string' ? value : value.name)),
+          map((name) => (name ? this._filter(name) : this.origins.slice()))
+        );
+        this.spinner.hide();
+        this.sesion.setOrigins(this.origins);
+      }
+    );
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+    });
+  }
+
+
   getDestination() {
     this.pachageService.getDestinies().subscribe(
       (result: any) => {
         if (result.confirmation) {
+          this.sesion.setDestinos(result.data);
           this.destinies = result.data;
           console.log('this.destinies');
           console.log(this.destinies);
@@ -181,34 +347,49 @@ export class PaquetesComponent implements OnInit, AfterViewInit {
     this.resultSearch = this.destinies;
   }
 
+  validCampos(){
+    let valid = true;
+   if(this.myControl.value === ''){
+    this.openSnackBar('Campos incompletos');
+    valid = false;
+   }
+   return valid;
+  }
+
   onSelectMonth(month) {}
 
   search() {
-    console.log('this.destiny');
-    console.log(this.destiny);
 
-    if (this.destiny && this.destiny.id) {
-      const filter = {
-        location: this.destiny,
-        date: this.monthControl.value,
-        months: this.arrayMonths,
-      };
-
-      console.log('JSON.stringify(filter)');
-      console.log(JSON.stringify(filter));
-
-      console.log('filter');
-      console.log(filter);
-
-      window.open(
-        environment.urlVacaFacade + '1/' + JSON.stringify(filter),
-        '_blank'
-      );
-
-      //this.router.navigate(['result']);
+    let datos = this.validCampos();
+    if (datos === false) {
+      return;
     } else {
-      //this.openSnackBar('Seleccione un destino');
+      if (this.destiny && this.destiny.id) {
+        const filter = {
+          location: this.destiny,
+          date: this.monthControl.value,
+          months: this.arrayMonths,
+        };
+  
+        console.log('JSON.stringify(filter)');
+        console.log(JSON.stringify(filter));
+  
+        console.log('filter');
+        console.log(filter);
+  
+        window.open(
+          environment.urlVacaFacade + '1/' + JSON.stringify(filter),
+          '_blank'
+        );
+  
+        //this.router.navigate(['result']);
+      } else {
+        //this.openSnackBar('Seleccione un destino');
+      }
     }
+    
+
+   
   }
 
   getMenuImage(index) {

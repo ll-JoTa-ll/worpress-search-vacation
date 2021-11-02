@@ -22,16 +22,9 @@
     <div class="col-12 m-0 p-0 pt-3">
       <div class="row m-0 p-0">
         <div class="col-12 col-lg-4 m-0 p-0">
-          <label class="label-input">
+          <app-dm-autocomplete-flight [myControlOrigens]="myControlOrigen" [autocompleteControl]="myControlOrigen"  (itemSelected)="igualarOrigen2($event)"  (inputChange)="onOriginChange($event)" [list]="originList" [filteredOptionsOrigens]="filteredOptionsDestino"></app-dm-autocomplete-flight>
+         <!--  <label class="label-input">
             <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
-            <!--
-            <input
-              class="input-sin-borde"
-              type="text"
-              placeholder="Origen"
-              id="txtOrigen"
-            />
-            -->
             <input
               type="text"
               placeholder="Origen"
@@ -72,20 +65,13 @@
                 {{ option.name | titlecase }}
               </mat-option>
             </mat-autocomplete>
-          </label>
+          </label> -->
         </div>
 
         <div class="col-12 col-lg-4 m-0 p-0">
-          <label class="label-input">
+          <app-dm-autocomplete [myControlOrigens]="myControlDestino" [autocompleteControl]="myControlDestino"  (itemSelected)="igualarOrigen($event)"  (inputChange)="onDestinationChange($event)" [list]="toList" [filteredOptionsOrigens]="filteredOptionsOrigen"></app-dm-autocomplete>
+         <!--  <label class="label-input">
             <img src="./assets/images/iconos/vuelos/destino.svg" alt="" />
-            <!--
-            <input
-              class="input-sin-borde"
-              type="text"
-              placeholder="Destino"
-              id="txtDestino"
-            />
-            -->
             <input
               type="text"
               placeholder="Destino"
@@ -126,7 +112,7 @@
                 {{ option.name | titlecase }}
               </mat-option>
             </mat-autocomplete>
-          </label>
+          </label> -->
         </div>
 
         <div class="col-12 col-lg-4 m-0 p-0">
@@ -244,8 +230,8 @@
               class="font-Nunito-Regular size-text-1 mr-2"
               name="select"
             >
-              <option value="1">1</option>
-              <option value="2" selected>2</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>

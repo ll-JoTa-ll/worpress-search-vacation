@@ -8,61 +8,7 @@
           <div class="row m-0 p-0">
             <div class="col-12 m-0 p-0 size-text-1">Destino</div>
             <div class="col-12 m-0 p-0">
-              <label class="label-input">
-                <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
-                <!--
-                <input
-                  class="input-sin-borde"
-                  type="text"
-                  placeholder="Origen"
-                  id="txtOrigen"
-                />
-                -->
-                <input
-                  type="text"
-                  placeholder="Destino"
-                  aria-label="Number"
-                  matInput
-                  class="input-sin-borde"
-                  [formControl]="myControlOrigen"
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete
-                  #auto="matAutocomplete"
-                  (optionSelected)="onOptionSelectedOrigen($event)"
-                  [displayWith]="display"
-                >
-                  <mat-option
-                    *ngFor="let option of filteredOptionsOrigen | async"
-                    [value]="option"
-                  >
-                    <mat-icon
-                      *ngIf="
-                        option.icon &&
-                          option.icon !== '' &&
-                          option.icon === 'A';
-                        else elseTem
-                      "
-                    >
-                      local_airport
-                    </mat-icon>
-
-                    <ng-template #elseTem>
-                      <mat-icon
-                        *ngIf="
-                          option.icon &&
-                            option.icon !== '' &&
-                            option.icon === 'C';
-                          else elseTem
-                        "
-                        >location_city</mat-icon
-                      >
-                    </ng-template>
-
-                    {{ option.name | titlecase }}
-                  </mat-option>
-                </mat-autocomplete>
-              </label>
+              <app-dm-autocomplete [myControlOrigens]="myControlOrigen" [validOrigen]="validDest" [autocompleteControl]="myControlOrigen"  (itemSelected)="igualarOrigen($event)"  (inputChange)="onDestinationChange($event)" [list]="toList" [filteredOptionsOrigens]="filteredOptionsOrigen"></app-dm-autocomplete>
             </div>
           </div>
         </div>

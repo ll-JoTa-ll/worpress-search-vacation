@@ -17,6 +17,8 @@ import {
   MatDatepickerInputEvent,
   MatDatepicker,
 } from '@angular/material/datepicker';
+import { ConstantService } from 'src/app/services/constant.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-hotelx',
@@ -50,13 +52,17 @@ export class HotelxComponent implements OnInit {
   matDateOrigen;
   matDateDestino;
 
+  toList = [];
   personas;
   cabinType;
+  validDest = false;
 
   constructor(
     private headerMenuService: HeaderMenuService,
     private flightService: FlightService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private sesion: ConstantService,
+    private snackBar: MatSnackBar
   ) {
     this.headerMenuService.getMenuImage(4);
     this.personas = 2;
@@ -66,11 +72,31 @@ export class HotelxComponent implements OnInit {
     this.headerMenuService.getMenuImage(4);
     this.origins = [];
     this.minCalendar.setDate(this.minCalendar.getDate() + 1);
-    this.getPriorityAirports();
+    this.origins = this.sesion.getOrigins();
+    if (!this.origins || this.origins.length === 0) {
+      this.origins = [];
+      this.getPriorityAirports();
+    } else {
+      this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this._filter(name) : this.origins.slice()))
+      );
+    }
   }
 
   ngAfterViewInit() {
     this.headerMenuService.getMenuImage(4);
+  }
+
+  onDestinationChange(val: string) {
+    if (val.length >= 3 && this.origins) {
+      this.toList = this.origins.filter(
+        (item) => item.searchName.toLowerCase().search(val.toLowerCase()) >= 0
+      );
+    } else {
+      this.toList = [];
+    }
   }
 
   private _filter(value: string) {
@@ -212,30 +238,65 @@ export class HotelxComponent implements OnInit {
     console.log(this.matDateDestino.toISOString());
   }
 
+  igualarOrigen(valor){
+    this.origen = valor;
+  }
+
+  validCampos(){
+    let valid = true;
+   if(this.myControlOrigen.value === ''){
+    this.openSnackBar('Campos incompletos');
+    valid = false;
+   }
+   if(this.matDateOrigen === undefined){
+    this.openSnackBar('Campos incompletos');
+    valid = false;
+   }
+   if(this.matDateDestino === undefined){
+    this.openSnackBar('Campos incompletos');
+    valid = false;
+   }
+   return valid;
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+    });
+  }
+
   search() {
-    const filter = {
-      from: null,
-      to: this.origen,
-      departureDate: this.matDateOrigen.toISOString(),
-      returnDate: this.matDateDestino.toISOString(),
-      rooms: 1,
-      roomMod: [
-        { adults: this.personas, children: 0, ages: [], passengers: [] },
-      ],
-      passengers: this.personas,
-      lBoard: [],
-      lZone: [],
-      lTripAdvisor: [],
-      lSupplier: [],
-      lRating: [],
-      firstItem: '1',
-    };
 
-    console.log(JSON.stringify(filter));
+    let datos = this.validCampos();
+    if (datos === false) {
+      return;
+    } else {
 
-    window.open(
-      environment.urlVacaFacade + '4/' + JSON.stringify(filter),
-      '_blank'
-    );
+      const filter = {
+        from: null,
+        to: this.origen,
+        departureDate: this.matDateOrigen.toISOString(),
+        returnDate: this.matDateDestino.toISOString(),
+        rooms: 1,
+        roomMod: [
+          { adults: this.personas, children: 0, ages: [], passengers: [] },
+        ],
+        passengers: this.personas,
+        lBoard: [],
+        lZone: [],
+        lTripAdvisor: [],
+        lSupplier: [],
+        lRating: [],
+        firstItem: '1',
+      };
+  
+      console.log(JSON.stringify(filter));
+  
+      window.open(
+        environment.urlVacaFacade + '4/' + JSON.stringify(filter),
+        '_blank'
+      );
+    }
+   
   }
 }

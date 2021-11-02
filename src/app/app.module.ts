@@ -22,12 +22,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { HotelxComponent } from './components/search/hotelx/hotelx.component';
+import { DmAutocompleteComponent } from './components/shared/dm-autocomplete/dm-autocomplete.component';
+import { DmAutocompleteFlightComponent } from './components/shared/dm-autocomplete-flight/dm-autocomplete-flight.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { HotelxComponent } from './components/search/hotelx/hotelx.component';
     HeaderComponent,
     RoomsCounterComponent,
     HotelxComponent,
+    DmAutocompleteComponent,
+    DmAutocompleteFlightComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ import { HotelxComponent } from './components/search/hotelx/hotelx.component';
     MatCheckboxModule,
     MatAutocompleteModule,
     MatInputModule,
+    MatSnackBarModule,
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,

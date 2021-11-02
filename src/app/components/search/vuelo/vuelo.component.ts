@@ -17,6 +17,8 @@ import {
   MatDatepickerInputEvent,
   MatDatepicker,
 } from '@angular/material/datepicker';
+import { ConstantService } from 'src/app/services/constant.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-vuelo',
@@ -41,7 +43,8 @@ export class VueloComponent implements OnInit, AfterViewInit {
   fromFilter: any[] = [];
   toFilter: any[] = [];
   dateFilter: any[] = [];
-
+  toList = [];
+  originList = [];
   @ViewChild('dpEndDeparture', { read: undefined, static: false })
   endDatePicker: MatDatepicker<Date>;
 
@@ -56,7 +59,9 @@ export class VueloComponent implements OnInit, AfterViewInit {
   constructor(
     private headerMenuService: HeaderMenuService,
     private flightService: FlightService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private sessionService: ConstantService,
+    private snackBar: MatSnackBar
   ) {
     let clase1 = { value: 'ECO', viewValue: 'Economica' };
     let clase2 = { value: 'ECO', viewValue: 'Economica' };
@@ -64,7 +69,7 @@ export class VueloComponent implements OnInit, AfterViewInit {
     this.claseVuelo.push(clase1);
     this.claseVuelo.push(clase2);
     this.claseVuelo.push(clase3);
-    this.personas = 2;
+    this.personas = 1;
     this.cabinType = '';
     this.headerMenuService.getMenuImage(3);
   }
@@ -74,7 +79,31 @@ export class VueloComponent implements OnInit, AfterViewInit {
     this.origins = [];
     this.minCalendar.setDate(this.minCalendar.getDate() + 1);
     this.tipoVuelo = 'RT';
-    this.getPriorityAirports();
+    this.origins = this.sessionService.getOrigins();
+    if (!this.origins || this.origins.length === 0) {
+      this.origins = [];
+      this.getPriorityAirports();
+    } else {
+      this.filteredOptionsOrigen = this.myControlOrigen.valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this._filter(name) : this.origins.slice()))
+      );
+
+      this.filteredOptionsDestino = this.myControlDestino.valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this._filter(name) : this.destinys.slice()))
+      );
+    }
+  }
+
+  igualarOrigen(valor){
+    this.origen = valor;
+  }
+
+  igualarOrigen2(valor){
+    this.destino = valor;
   }
 
   ngAfterViewInit() {
@@ -241,6 +270,27 @@ export class VueloComponent implements OnInit, AfterViewInit {
     console.log('item: ' + JSON.stringify(item));
   }
 
+  
+  onDestinationChange(val: string) {
+    if (val.length >= 3 && this.origins) {
+      this.toList = this.origins.filter(
+        (item) => item.searchName.toLowerCase().search(val.toLowerCase()) >= 0
+      );
+    } else {
+      this.toList = [];
+    }
+  }
+
+  onOriginChange(val: string) {
+    if (val.length >= 3 && this.origins) {
+      this.originList = this.origins.filter(
+        (item) => item.searchName.toLowerCase().search(val.toLowerCase()) >= 0
+      );
+    } else {
+      this.originList = [];
+    }
+  }
+
   /*
   onBeginDateChange(event: MatDatepickerInputEvent<Date>) {
     if (this.tipoVuelo == 'RT') {
@@ -275,73 +325,145 @@ export class VueloComponent implements OnInit, AfterViewInit {
     console.log(this.matDateDestino.toISOString());
   }
 
-  search() {
-    let fromFilter = this.fromFilter;
-    let toFilter = this.toFilter;
-    let dateFilter = this.dateFilter;
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+    });
+  }
 
+  
+  validCampos(){
+    let valid = true;
     if (this.tipoVuelo == 'RT') {
-      fromFilter.push(this.origen);
-      fromFilter.push(this.destino);
-      toFilter.push(this.destino);
-      toFilter.push(this.origen);
-
-      dateFilter.push(this.matDateOrigen.toISOString());
-      dateFilter.push(this.matDateDestino.toISOString());
+      if(this.myControlOrigen.value === ''){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
+       if(this.myControlDestino.value === ''){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
+       if(this.matDateOrigen === undefined){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
+       if(this.matDateDestino === undefined){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
     }
 
-    if (this.tipoVuelo == 'OW') {
-      fromFilter.push(this.origen);
-      toFilter.push(this.destino);
-
-      dateFilter.push(this.matDateOrigen.toISOString());
+    if (this.tipoVuelo == 'OW') { 
+      if(this.myControlOrigen.value === ''){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
+       if(this.myControlDestino.value === ''){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
+       if(this.matDateOrigen === undefined){
+        this.openSnackBar('Campos incompletos');
+        valid = false;
+       }
     }
 
-    if (this.tipoVuelo == 'MC') {
+    
+  
+   return valid;
+  }
+
+  search() {
+
+    let datos = this.validCampos();
+    if (datos === false) {
+      return;
+    } else {
+
+   
+   
+      let fromFilter = [];
+      let toFilter = [];
+      let dateFilter = [];
+      var algo = this.destino.name;
+      var res = algo.replace(/\//g, "-");
+      var algo2 = this.origen.name;
+      var rest2 = algo2.replace(/\//g, "-");
+
+      var algo3 = this.destino.searchName;
+      var res3 = algo3.replace(/\//g, "-");
+      var algo4 = this.origen.searchName;
+      var rest4 = algo4.replace(/\//g, "-");
+
+
+      this.destino.name = res;
+      this.origen.name = rest2;
+      this.destino.searchName = res3;
+      this.origen.searchName = rest4;
+      if (this.tipoVuelo == 'RT') {
+        fromFilter.push(this.destino);
+        fromFilter.push(this.origen);
+        toFilter.push(this.origen);
+        toFilter.push(this.destino);
+  
+        dateFilter.push(this.matDateOrigen.toISOString());
+        dateFilter.push(this.matDateDestino.toISOString());
+      }
+  
+      if (this.tipoVuelo == 'OW') {
+        fromFilter.push(this.destino);
+        toFilter.push(this.origen);
+  
+        dateFilter.push(this.matDateOrigen.toISOString());
+      }
+  
+      if (this.tipoVuelo == 'MC') {
+      }
+  
+      const cabinType = this.cabinType;
+      let cabinTypeText = 'Todas';
+      switch (cabinType) {
+        case '':
+          cabinTypeText = 'Todas';
+          break;
+        case 'E':
+          cabinTypeText = 'Económica';
+          break;
+        case 'B':
+          cabinTypeText = 'Business';
+          break;
+        case 'F':
+          cabinTypeText = 'First';
+          break;
+      }
+  
+      const filter = {
+        Ocompany: null,
+        PartnerClub: false,
+        type: this.tipoVuelo,
+        lpassenger: [
+          { numberPassenger: this.personas, typePassenger: 'ADT' },
+          { numberPassenger: '0', typePassenger: 'CNN' },
+          { numberPassenger: '0', typePassenger: 'INF' },
+        ],
+        cabinType: { id: cabinType, description: cabinTypeText },
+        scales: { id: '', description: 'Todos' },
+        includesBaggage: this.inMaleta,
+        fromFilter: fromFilter,
+        toFilter: toFilter,
+        dateFilter: dateFilter,
+      };
+  
+      console.log(JSON.stringify(filter));
+  
+      //return false;
+  
+      window.open(
+        environment.urlVacaFacade + '3/' + JSON.stringify(filter),
+        '_blank'
+      );
     }
-
-    const cabinType = this.cabinType;
-    let cabinTypeText = 'Todas';
-    switch (cabinType) {
-      case '':
-        cabinTypeText = 'Todas';
-        break;
-      case 'E':
-        cabinTypeText = 'Económica';
-        break;
-      case 'B':
-        cabinTypeText = 'Business';
-        break;
-      case 'F':
-        cabinTypeText = 'First';
-        break;
-    }
-
-    const filter = {
-      Ocompany: null,
-      PartnerClub: false,
-      type: this.tipoVuelo,
-      lpassenger: [
-        { numberPassenger: this.personas, typePassenger: 'ADT' },
-        { numberPassenger: '0', typePassenger: 'CNN' },
-        { numberPassenger: '0', typePassenger: 'INF' },
-      ],
-      cabinType: { id: cabinType, description: cabinTypeText },
-      scales: { id: '', description: 'Todos' },
-      includesBaggage: this.inMaleta,
-      fromFilter: fromFilter,
-      toFilter: toFilter,
-      dateFilter: dateFilter,
-    };
-
-    console.log(JSON.stringify(filter));
-
-    //return false;
-
-    window.open(
-      environment.urlVacaFacade + '3/' + JSON.stringify(filter),
-      '_blank'
-    );
+    
   }
 
   searchV2() {

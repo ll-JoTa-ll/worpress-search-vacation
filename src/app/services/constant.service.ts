@@ -4,6 +4,9 @@ import { ChildrenAge } from '../models/children-age';
 import { months } from '../models/months';
 import { gender } from '../models/gender';
 
+
+const ORIGINS = 'origins';
+const DESTINOS = 'destinos';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,5 +23,21 @@ export class ConstantService {
 
   getGenders() {
     return gender;
+  }
+
+  setOrigins(origins: any[]) {
+    sessionStorage.setItem(ORIGINS, JSON.stringify(origins));
+  }
+
+  getOrigins(): any[] {
+    return JSON.parse(sessionStorage.getItem(ORIGINS));
+  }
+
+  setDestinos(origins: any) {
+    sessionStorage.setItem(DESTINOS, JSON.stringify(origins));
+  }
+
+  getDestinos(): any {
+    return JSON.parse(sessionStorage.getItem(DESTINOS));
   }
 }

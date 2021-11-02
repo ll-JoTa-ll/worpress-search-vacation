@@ -1,0 +1,57 @@
+<label class="label-input">
+    <img src="./assets/images/iconos/vuelos/origen.svg" alt="" />
+    <!--
+    <input
+      class="input-sin-borde"
+      type="text"
+      placeholder="Origen"
+      id="txtOrigen"
+    />
+    -->
+    <input
+      type="text"
+      placeholder="Origen"
+      aria-label="Number"
+      matInput
+      onClick="this.select();"
+      class="input-sin-borde"
+      [formControl]="autocompleteControl"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onOptionSelectedOrigen($event)"
+      [displayWith]="display"
+      panelWidth="300"
+    >
+      <mat-option
+        *ngFor="let option of list "
+        [value]="option"
+      >
+        <mat-icon
+          *ngIf="
+            option.icon &&
+              option.icon !== '' &&
+              option.icon === 'A';
+            else elseTem
+          "
+        >
+          local_airport
+        </mat-icon>
+
+        <ng-template #elseTem>
+          <mat-icon
+            *ngIf="
+              option.icon &&
+                option.icon !== '' &&
+                option.icon === 'C';
+              else elseTem
+            "
+            >location_city</mat-icon
+          >
+        </ng-template>
+
+        {{ option.name | titlecase }}
+      </mat-option>
+    </mat-autocomplete>
+  </label>
